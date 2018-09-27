@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class BaseCitizen : MonoBehaviour
 {
-    public int happiness = 1;
+    public int happiness;
 
     public int happinessThreashold;
 
     CitizenManager citizenManager;
+
+    
     // Use this for initialization
 	void Start ()
     {
 		citizenManager = FindObjectOfType<CitizenManager>();
 
         citizenManager.totalCitizens.Add(this);
+
+        happiness = 1;
     }
 	
 	// Update is called once per frame
@@ -33,7 +37,10 @@ public class BaseCitizen : MonoBehaviour
 
     }
 
-    
+    public void AddHapiness(int happinessAdd)
+    {
+        happiness += happinessAdd;
+    }
 
     private void OnDestroy()
     {

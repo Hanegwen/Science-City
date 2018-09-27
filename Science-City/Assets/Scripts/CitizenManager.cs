@@ -8,12 +8,14 @@ public class CitizenManager : MonoBehaviour
 
     public List<BaseCitizen> totalCitizens = new List<BaseCitizen>();
 
-    int totalHapinessOfTown;
+    public int totalHapinessOfTown;
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
     {
-		
+        MakeNewCitizen();
+
+        WaitingToMakeCitizens();
 	}
 	
 	// Update is called once per frame
@@ -21,6 +23,27 @@ public class CitizenManager : MonoBehaviour
     {
 		
 	}
+
+    public void AddNewCitizens()
+    {
+        
+
+        if(SetHappinessOfCitizens() > totalCitizens.Count)
+        {
+            Debug.Log("Make New Citizen");
+
+            MakeNewCitizen();
+        }
+
+        WaitingToMakeCitizens();
+    }
+
+    
+
+    public void MakeNewCitizen()
+    {
+        Instantiate(baseCitizen);
+    }
 
     public int SetHappinessOfCitizens()
     {
@@ -36,5 +59,17 @@ public class CitizenManager : MonoBehaviour
         totalHapinessOfTown = localTotalHapiness;
 
         return totalHapinessOfTown;
+    }
+
+
+    IEnumerator WaitingToMakeCitizens()
+    {
+        Debug.Log("Waiting To Make Citizens");
+
+        yield return new WaitForSeconds(5);
+
+        AddNewCitizens();
+
+
     }
 }
