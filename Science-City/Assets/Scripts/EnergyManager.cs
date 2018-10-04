@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class EnergyManager : MonoBehaviour
 {
+    public NaturalGas naturalGas;
+    public Coal coal;
+
+    public float CoalAmount = 100;
+    public float NaturalGasAmount = 100;
+
 
 	// Use this for initialization
 	void Start ()

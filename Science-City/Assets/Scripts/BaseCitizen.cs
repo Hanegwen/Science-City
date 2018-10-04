@@ -18,7 +18,9 @@ public class BaseCitizen : MonoBehaviour
 
         citizenManager.totalCitizens.Add(this);
 
-        happiness = 1;
+        happiness = 50;
+
+        happinessThreashold = Random.Range(10, 20);
     }
 	
 	// Update is called once per frame

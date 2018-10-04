@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class TownManager : MonoBehaviour
 {
-    CitizenManager citizenManager;
+    //https://www.eia.gov/tools/faqs/faq.php?id=97&t=3
 
+        //.03 Megawatt per citizen
+
+    CitizenManager citizenManager;
+    EnergyManager energyManager;
+    PolutionManager polutionManager;
+
+    float CitizenEnergyUsage = .03f;
 
     public int DaysUntilReElection = 300;
 
+    public float Money = 100;
+
+
+    enum FavoriteEnergy { Coal, NaturalGas, Nuclear, Solar}
+    FavoriteEnergy townsFavroiteEnergy;
 	// Use this for initialization
 	void Start ()
     {
@@ -17,6 +29,20 @@ public class TownManager : MonoBehaviour
         if(citizenManager == null)
         {
             Debug.Log("No Citizen Manager was Found");
+        }
+
+        energyManager = FindObjectOfType<EnergyManager>();
+
+        if(energyManager == null)
+        {
+            Debug.Log("No Energy Manager was Found");
+        }
+
+        polutionManager = FindObjectOfType<PolutionManager>();
+
+        if(polutionManager == null)
+        {
+            Debug.Log("No Polution Manager was Found");
         }
 
         MinusDays();
@@ -52,6 +78,25 @@ public class TownManager : MonoBehaviour
         }
     }
 
+    void UseEnergy()
+    {
+        if(energyManager.NaturalGasAmount > CitizenEnergyUsage * citizenManager.totalCitizens.Capacity)
+        {
+            Money -= energyManager.naturalGas.CostOfMegawattHour * CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
+            float UsedMegawattHour = CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
+
+            energyManager.NaturalGasAmount -= UsedMegawattHour;
+        }
+
+        if(energyManager.CoalAmount > CitizenEnergyUsage * citizenManager.totalCitizens.Capacity)
+        {
+            Money -= energyManager.coal.CostOfMegawattHour * CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
+            float UsedMegawattHour = CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
+
+            energyManager.CoalAmount -= UsedMegawattHour;
+        }
+    }
+
     void Loose()
     {
         if(citizenManager.SetHappinessOfCitizens() == 0)
@@ -71,6 +116,8 @@ public class TownManager : MonoBehaviour
         yield return new WaitForSeconds(secondCount);
 
         DaysUntilReElection--;
+
+        UseEnergy();
 
         MinusDays();
     }
