@@ -6,10 +6,12 @@ public class EnergyManager : MonoBehaviour
 {
     public NaturalGas naturalGas;
     public Coal coal;
+    public Solar solar;
 
     public float CoalAmount = 100;
     public float NaturalGasAmount = 100;
 
+    public float SolarAmount = 0;
 
 	// Use this for initialization
 	void Start ()

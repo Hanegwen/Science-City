@@ -11,6 +11,7 @@ public class TownManager : MonoBehaviour
     CitizenManager citizenManager;
     EnergyManager energyManager;
     PolutionManager polutionManager;
+    WeatherManager weatherManager;
 
     float CitizenEnergyUsage = .03f;
 
@@ -45,6 +46,13 @@ public class TownManager : MonoBehaviour
             Debug.Log("No Polution Manager was Found");
         }
 
+        weatherManager = FindObjectOfType<WeatherManager>();
+
+        if(weatherManager == null)
+        {
+            Debug.Log("No Weather Manager was Found");
+        }
+
         MinusDays();
     }
 	
@@ -63,6 +71,7 @@ public class TownManager : MonoBehaviour
 
     void MinusDays()
     {
+        weatherManager.ChangeWeather();
         StartCoroutine(MakeSeconds(1));
     }
 
@@ -95,7 +104,18 @@ public class TownManager : MonoBehaviour
 
             energyManager.CoalAmount -= UsedMegawattHour;
         }
+
+        if(energyManager.SolarAmount > CitizenEnergyUsage * citizenManager.totalCitizens.Capacity)
+        {
+            Money -= energyManager.solar.CostOfMegawattHour * CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
+
+            float UsedMegawattHour = CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
+
+            energyManager.SolarAmount -= UsedMegawattHour;
+        }
     }
+
+    
 
     void Loose()
     {
