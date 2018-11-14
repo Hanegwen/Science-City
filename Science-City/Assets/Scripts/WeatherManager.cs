@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class WeatherManager : MonoBehaviour
 {
-    enum TypesOfDays {Sunny, Shade, Storms };
-    TypesOfDays TodaysWeather;
+    public enum TypesOfDays {Sunny, Shade, Storms };
+    public TypesOfDays TodaysWeather;
 
     int DaysInARow = 0;
     

@@ -421,7 +421,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &552411149
 RectTransform:
   m_ObjectHideFlags: 0
@@ -464,7 +464,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 552411148}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -707,7 +707,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 612094844}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 684020481}
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &612094844
@@ -905,6 +916,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 684020480}
+  - component: {fileID: 684020481}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -925,6 +937,31 @@ Transform:
   m_Father: {fileID: 1390388167}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &684020481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 684020479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfcafebdf297d32489b197926245a765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  introCanvas: {fileID: 552411151}
+  baseGameCanvas: {fileID: 2045896770}
+  CurrentWeatherText: {fileID: 983111536}
+  NaturalGasReservesText: {fileID: 1895599477}
+  CoalReservesText: {fileID: 1917280498}
+  SunReservesText: {fileID: 1773491154}
+  CurrentMoneyText: {fileID: 1504867259}
+  DaysUntilReElectionText: {fileID: 1277805059}
+  TotalApprovalText: {fileID: 563564499}
+  TotalCitizenText: {fileID: 479564885}
+  TotalPolutionText: {fileID: 1652489757}
+  AirPolutionText: {fileID: 1569065642}
+  WaterPolutionText: {fileID: 994103273}
+  LandPolutionText: {fileID: 680182758}
 --- !u!1 &742547643
 GameObject:
   m_ObjectHideFlags: 0
@@ -2692,6 +2729,7 @@ GameObject:
   - component: {fileID: 1938176290}
   - component: {fileID: 1938176289}
   - component: {fileID: 1938176291}
+  - component: {fileID: 1938176292}
   m_Layer: 0
   m_Name: TownManager
   m_TagString: Untagged
@@ -2788,6 +2826,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9517e73b3066a89438c5f11afabe3163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1938176292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1938176285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1f2e8126b867b149950c34120f7989e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TodaysWeather: 0
 --- !u!1 &1962035781
 GameObject:
   m_ObjectHideFlags: 0

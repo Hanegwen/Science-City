@@ -61,7 +61,10 @@ public class TownManager : MonoBehaviour
     {
         Loose();
 
-        
+        if(energyManager == null)
+        {
+            Debug.Log("Energy Manager Catch");
+        }
 
 		if(DaysUntilReElection == 0)
         {
