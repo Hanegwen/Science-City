@@ -6,7 +6,9 @@ public class TownManager : MonoBehaviour
 {
     //https://www.eia.gov/tools/faqs/faq.php?id=97&t=3
 
-        //.03 Megawatt per citizen
+    //.03 Megawatt per citizen
+
+    public bool gameHasBegun = false;
 
     CitizenManager citizenManager;
     EnergyManager energyManager;
@@ -22,9 +24,13 @@ public class TownManager : MonoBehaviour
 
     enum FavoriteEnergy { Coal, NaturalGas, Nuclear, Solar}
     FavoriteEnergy townsFavroiteEnergy;
+
+    bool continueTimeCycle = true;
 	// Use this for initialization
 	void Start ()
     {
+        
+
         citizenManager = FindObjectOfType<CitizenManager>();
 
         if(citizenManager == null)
@@ -53,22 +59,31 @@ public class TownManager : MonoBehaviour
             Debug.Log("No Weather Manager was Found");
         }
 
-        MinusDays();
+        
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        Loose();
-
-        if(energyManager == null)
+        if (gameHasBegun)
         {
-            Debug.Log("Energy Manager Catch");
-        }
+            Debug.Log("Continue Time Cycle Bool: " + continueTimeCycle);
+            if (continueTimeCycle)
+            {
+                MinusDays();
+            }
 
-		if(DaysUntilReElection == 0)
-        {
-            ReElectionDecision();
+            Loose();
+
+            if (energyManager == null)
+            {
+                Debug.Log("Energy Manager Catch");
+            }
+
+            if (DaysUntilReElection == 0)
+            {
+                ReElectionDecision();
+            }
         }
 	}
 
@@ -136,12 +151,19 @@ public class TownManager : MonoBehaviour
 
     IEnumerator MakeSeconds (int secondCount)
     {
+        continueTimeCycle = false;
+        
+        Debug.Log("Time has Passed");
         yield return new WaitForSeconds(secondCount);
+        continueTimeCycle = true;
+
 
         DaysUntilReElection--;
 
         UseEnergy();
+        
 
-        MinusDays();
+        //StartCoroutine(MakeSeconds(1));
+        //MinusDays();
     }
 }

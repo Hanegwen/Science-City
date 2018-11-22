@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,9 +13,10 @@ public class UIManager : MonoBehaviour
     CitizenManager citizenManager;
 
     public Canvas introCanvas;
-
+    public Canvas startCanvas;
     public Canvas baseGameCanvas;
 
+    
     public TextMeshProUGUI CurrentWeatherText;
     public TextMeshProUGUI NaturalGasReservesText;
     public TextMeshProUGUI CoalReservesText;
@@ -29,6 +31,20 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI LandPolutionText;
 
 
+
+    public GameObject polutionPanel;
+    public GameObject resourcePanel;
+    public GameObject defaultPanel;
+    public GameObject buttonPanel;
+
+    public InputField NameField;
+
+    string mayorName;
+
+    //Manual Because Bugs
+    //public GameObject PolutionAButton;
+    //public GameObject ResourceAButton;
+
     // Use this for initialization
     void Start ()
     {
@@ -39,11 +55,66 @@ public class UIManager : MonoBehaviour
         citizenManager = FindObjectOfType<CitizenManager>();
 
         introCanvas.enabled = true;
+        startCanvas.enabled = false;
         baseGameCanvas.enabled = false;
+
+        polutionPanel.SetActive(false);
+        resourcePanel.SetActive(false);
+        buttonPanel.SetActive(false);
+        defaultPanel.SetActive(false);
 	}
 	
 	// Update is called once per frame
 	void Update ()
+    {
+        UITextUpdate();
+	}
+
+    public void QuitButton()
+    {
+        Application.Quit();
+    }
+
+    public void PolutionButton()
+    {
+        polutionPanel.SetActive(true);
+        resourcePanel.SetActive(false);
+    }
+
+    public void ResourceButton()
+    {
+        resourcePanel.SetActive(true);
+        polutionPanel.SetActive(false);
+    }
+
+    public void BeginGameButton()
+    {
+        startCanvas.enabled = false;
+        baseGameCanvas.enabled = true;
+        defaultPanel.SetActive(true);
+        buttonPanel.SetActive(true);
+
+        mayorName = NameField.text;
+        townManager.gameHasBegun = true;
+    }
+
+    public void StartGame()
+    {
+        Debug.Log("Start Game Here");
+
+        introCanvas.enabled = false;
+        startCanvas.enabled = true;
+        baseGameCanvas.enabled = false;
+        
+
+
+        ////For Fixing Bugs
+        //PolutionAButton.SetActive(true);
+        //ResourceAButton.SetActive(true);
+        
+    }
+
+    void UITextUpdate()
     {
         CurrentWeatherText.text = "Current Weather: " + weatherManager.TodaysWeather;
         Debug.Log(CurrentWeatherText.text);
@@ -69,13 +140,5 @@ public class UIManager : MonoBehaviour
         Debug.Log(WaterPolutionText.text);
         LandPolutionText.text = "Land Polution: " + polutionManger.CurrentLandPolution;
         Debug.Log(LandPolutionText.text);
-	}
-
-    public void StartGame()
-    {
-        Debug.Log("Start Game Here");
-
-        introCanvas.enabled = false;
-        baseGameCanvas.enabled = true;
     }
 }
