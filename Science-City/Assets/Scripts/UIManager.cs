@@ -98,6 +98,11 @@ public class UIManager : MonoBehaviour
         townManager.gameHasBegun = true;
     }
 
+    public void ToggleResourceButton()
+    {
+
+    }
+
     public void StartGame()
     {
         Debug.Log("Start Game Here");

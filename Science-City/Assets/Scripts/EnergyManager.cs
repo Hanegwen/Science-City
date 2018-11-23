@@ -13,6 +13,9 @@ public class EnergyManager : MonoBehaviour
 
     public float SolarAmount = 0;
 
+    enum CurrentEnergy { Coal, Gas, Solar};
+    CurrentEnergy energy;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -24,4 +27,19 @@ public class EnergyManager : MonoBehaviour
     {
 		
 	}
+
+    public void ChangeActivateEnergy()
+    {
+        switch(energy)
+        {
+            case Coal:
+                break;
+            case NaturalGas:
+                break;
+            case Solar:
+                break;
+            default:
+                break;
+        }
+    }
 }
