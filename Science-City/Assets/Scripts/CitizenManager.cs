@@ -10,10 +10,12 @@ public class CitizenManager : MonoBehaviour
 
     public int totalHapinessOfTown;
 
+    bool canMakeCitizens = true;
+
 	// Use this for initialization
 	void Awake ()
     {
-        MakeNewCitizen();
+        AddNewCitizens();
 
         WaitingToMakeCitizens();
 	}
@@ -26,16 +28,12 @@ public class CitizenManager : MonoBehaviour
 
     public void AddNewCitizens()
     {
-        
 
-        if(SetHappinessOfCitizens() > totalCitizens.Count)
+        if (canMakeCitizens)
         {
-            Debug.Log("Make New Citizen");
-
             MakeNewCitizen();
         }
 
-        WaitingToMakeCitizens();
     }
 
     
@@ -43,6 +41,9 @@ public class CitizenManager : MonoBehaviour
     public void MakeNewCitizen()
     {
         Instantiate(baseCitizen);
+        canMakeCitizens = false;
+
+        StartCoroutine(WaitingToMakeCitizens());
     }
 
     public int SetHappinessOfCitizens()
@@ -68,7 +69,9 @@ public class CitizenManager : MonoBehaviour
 
         yield return new WaitForSeconds(5);
 
-        AddNewCitizens();
+        Debug.Log("Baby is Born");
+
+        canMakeCitizens = true;
 
 
     }

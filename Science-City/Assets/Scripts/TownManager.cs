@@ -22,9 +22,6 @@ public class TownManager : MonoBehaviour
     public float Money = 100;
 
 
-    enum FavoriteEnergy { Coal, NaturalGas, Nuclear, Solar}
-    FavoriteEnergy townsFavroiteEnergy;
-
     bool continueTimeCycle = true;
 	// Use this for initialization
 	void Start ()
@@ -84,6 +81,10 @@ public class TownManager : MonoBehaviour
             {
                 ReElectionDecision();
             }
+
+            energyManager.GenerateSolarEnergy();
+            citizenManager.AddNewCitizens();
+            
         }
 	}
 
@@ -95,9 +96,9 @@ public class TownManager : MonoBehaviour
 
     void ReElectionDecision()
     {
-        if(true) // Pass ReElection
+        if(citizenManager.totalHapinessOfTown > 60) // Pass ReElection
         {
-
+            
         }
         else // Fail ReElection
         {
@@ -107,30 +108,32 @@ public class TownManager : MonoBehaviour
 
     void UseEnergy()
     {
-        if(energyManager.NaturalGasAmount > CitizenEnergyUsage * citizenManager.totalCitizens.Capacity)
+        float UsedMegawattHour;
+        switch (energyManager.energy)
         {
-            Money -= energyManager.naturalGas.CostOfMegawattHour * CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
-            float UsedMegawattHour = CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
+            case EnergyManager.CurrentEnergy.Coal:
+                Money -= energyManager.coal.CostOfMegawattHour * CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
+                UsedMegawattHour = CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
 
-            energyManager.NaturalGasAmount -= UsedMegawattHour;
+                energyManager.CoalAmount -= UsedMegawattHour;
+                break;
+            case EnergyManager.CurrentEnergy.Gas:
+                Money -= energyManager.naturalGas.CostOfMegawattHour * CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
+                UsedMegawattHour = CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
+
+                energyManager.NaturalGasAmount -= UsedMegawattHour;
+                break;
+            case EnergyManager.CurrentEnergy.Solar:
+                Money -= energyManager.solar.CostOfMegawattHour * CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
+
+                UsedMegawattHour = CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
+
+                energyManager.SolarAmount -= UsedMegawattHour;
+                break;
+            default:
+                break;
         }
 
-        if(energyManager.CoalAmount > CitizenEnergyUsage * citizenManager.totalCitizens.Capacity)
-        {
-            Money -= energyManager.coal.CostOfMegawattHour * CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
-            float UsedMegawattHour = CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
-
-            energyManager.CoalAmount -= UsedMegawattHour;
-        }
-
-        if(energyManager.SolarAmount > CitizenEnergyUsage * citizenManager.totalCitizens.Capacity)
-        {
-            Money -= energyManager.solar.CostOfMegawattHour * CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
-
-            float UsedMegawattHour = CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
-
-            energyManager.SolarAmount -= UsedMegawattHour;
-        }
     }
 
     

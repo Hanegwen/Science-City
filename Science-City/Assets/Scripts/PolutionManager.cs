@@ -13,11 +13,11 @@ public class PolutionManager : MonoBehaviour
     public int MaxWaterPolution = 100;
     public int MaxLandPolution = 100;
 
-    public int CurrentPolution = 0;
+    public float CurrentPolution = 0;
 
-    public int CurrentAirPolution = 0;
-    public int CurrentWaterPolution = 0;
-    public int CurrentLandPolution = 0;
+    public float CurrentAirPolution = 0;
+    public float CurrentWaterPolution = 0;
+    public float CurrentLandPolution = 0;
 
 	// Use this for initialization
 	void Start ()
@@ -60,7 +60,7 @@ public class PolutionManager : MonoBehaviour
         }
     }
 
-    public void AddPolution(int PolutionAmount, string PolutionType)
+    public void AddPolution(float PolutionAmount, string PolutionType)
     {
         switch(PolutionType)
         {

@@ -121,6 +121,7 @@ public class UIManager : MonoBehaviour
 
     void UITextUpdate()
     {
+        SetTextColorForResources();
         CurrentWeatherText.text = "Current Weather: " + weatherManager.TodaysWeather;
         Debug.Log(CurrentWeatherText.text);
         NaturalGasReservesText.text = "Natural Gas: " + energyManager.NaturalGasAmount;
@@ -145,5 +146,29 @@ public class UIManager : MonoBehaviour
         Debug.Log(WaterPolutionText.text);
         LandPolutionText.text = "Land Polution: " + polutionManger.CurrentLandPolution;
         Debug.Log(LandPolutionText.text);
+    }
+
+    void SetTextColorForResources()
+    {
+        switch (energyManager.energy)
+        {
+            case EnergyManager.CurrentEnergy.Coal:
+                CoalReservesText.GetComponent<TextMeshProUGUI>().color = Color.blue;
+                NaturalGasReservesText.GetComponent<TextMeshProUGUI>().color = Color.black;
+                SunReservesText.GetComponent<TextMeshProUGUI>().color = Color.black;
+                break;
+            case EnergyManager.CurrentEnergy.Gas:
+                CoalReservesText.GetComponent<TextMeshProUGUI>().color = Color.black;
+                NaturalGasReservesText.GetComponent<TextMeshProUGUI>().color = Color.blue;
+                SunReservesText.GetComponent<TextMeshProUGUI>().color = Color.black;
+                break;
+            case EnergyManager.CurrentEnergy.Solar:
+                CoalReservesText.GetComponent<TextMeshProUGUI>().color = Color.black;
+                NaturalGasReservesText.GetComponent<TextMeshProUGUI>().color = Color.black;
+                SunReservesText.GetComponent<TextMeshProUGUI>().color = Color.blue;
+                break;
+            default:
+                break;
+        }
     }
 }

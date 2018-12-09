@@ -7,7 +7,7 @@ public class WeatherManager : MonoBehaviour
     public enum TypesOfDays {Sunny, Shade, Storms };
     public TypesOfDays TodaysWeather;
 
-    int DaysInARow = 0;
+    
     
 	// Use this for initialization
 	void Start ()
@@ -23,45 +23,41 @@ public class WeatherManager : MonoBehaviour
 
     public void ChangeWeather()
     {
-        Debug.Log("Weather SYSTEM NOT DONE");
-        if (DaysInARow > 2)
-        {
+        Debug.Log("Change Weather");
+        int randomize = Random.Range(0, 50);
             switch (TodaysWeather)
             {
                 case TypesOfDays.Shade:
+                if(randomize <= 30)
+                {
+                    TodaysWeather = TypesOfDays.Storms;
+                }
+                else
+                {
+                    TodaysWeather = TypesOfDays.Sunny;
+                }
                     break;
                 case TypesOfDays.Storms:
+                if(randomize <= 25)
+                {
+                    TodaysWeather = TypesOfDays.Storms;
+                }
+                else
+                {
+                    TodaysWeather = TypesOfDays.Shade;
+                }
                     break;
                 case TypesOfDays.Sunny:
+                if(randomize <= 28)
+                {
+                    TodaysWeather = TypesOfDays.Sunny;
+                }
+                else
+                {
+                    TodaysWeather = TypesOfDays.Shade;
+                }
                     break;
             }
-        }
-
-        else if (DaysInARow > 1)
-        {
-            switch (TodaysWeather)
-            {
-                case TypesOfDays.Shade:
-                    break;
-                case TypesOfDays.Storms:
-                    break;
-                case TypesOfDays.Sunny:
-                    break;
-            }
-        }
-
-        else
-        {
-            switch (TodaysWeather)
-            {
-                case TypesOfDays.Shade:
-                    break;
-                case TypesOfDays.Storms:
-                    break;
-                case TypesOfDays.Sunny:
-                    break;
-            }
-        }
     }
     
 }
