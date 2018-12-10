@@ -8,9 +8,11 @@ public class CitizenManager : MonoBehaviour
 
     public List<BaseCitizen> totalCitizens = new List<BaseCitizen>();
 
-    public int totalHapinessOfTown;
+    public float totalHapinessOfTown;
 
     bool canMakeCitizens = true;
+
+    PolutionManager polutionManager;
 
 	// Use this for initialization
 	void Awake ()
@@ -23,7 +25,8 @@ public class CitizenManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		
+        totalHapinessOfTown = SetHappinessOfCitizens();
+        polutionManager = FindObjectOfType<PolutionManager>();
 	}
 
     public void AddNewCitizens()
@@ -46,30 +49,21 @@ public class CitizenManager : MonoBehaviour
         StartCoroutine(WaitingToMakeCitizens());
     }
 
-    public int SetHappinessOfCitizens()
+    public float SetHappinessOfCitizens()
     {
-        int localTotalHapiness = 0;
 
-        foreach (var Citizen in totalCitizens)
-        {
-            localTotalHapiness += Citizen.SendHapinessRank();
-        }
-
-        localTotalHapiness = localTotalHapiness / totalCitizens.Count;
-
-        totalHapinessOfTown = localTotalHapiness;
-
-        return totalHapinessOfTown;
+        float localHappiness = 1.5f - polutionManager.MaxPolution;
+        return localHappiness;
     }
 
 
     IEnumerator WaitingToMakeCitizens()
     {
-        Debug.Log("Waiting To Make Citizens");
+        //Debug.Log("Waiting To Make Citizens");
 
         yield return new WaitForSeconds(5);
 
-        Debug.Log("Baby is Born");
+        //Debug.Log("Baby is Born");
 
         canMakeCitizens = true;
 

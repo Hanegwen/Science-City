@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TownManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class TownManager : MonoBehaviour
     EnergyManager energyManager;
     PolutionManager polutionManager;
     WeatherManager weatherManager;
+    UIManager uIManager;
 
     float CitizenEnergyUsage = .03f;
 
@@ -56,21 +58,22 @@ public class TownManager : MonoBehaviour
             Debug.Log("No Weather Manager was Found");
         }
 
-        
+        uIManager = FindObjectOfType<UIManager>();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        energyManager = FindObjectOfType<EnergyManager>();
         if (gameHasBegun)
         {
-            Debug.Log("Continue Time Cycle Bool: " + continueTimeCycle);
+            //Debug.Log("Continue Time Cycle Bool: " + continueTimeCycle);
             if (continueTimeCycle)
             {
                 MinusDays();
             }
 
-            Loose();
+
 
             if (energyManager == null)
             {
@@ -88,6 +91,15 @@ public class TownManager : MonoBehaviour
         }
 	}
 
+    public void BuySolarPanels()
+    {
+        if(Money > energyManager.solar.costOfSolarPanel)
+        {
+            Money -= energyManager.solar.costOfSolarPanel;
+            energyManager.solar.amountOfSolarPanel++;
+        }
+    }
+
     void MinusDays()
     {
         weatherManager.ChangeWeather();
@@ -98,11 +110,11 @@ public class TownManager : MonoBehaviour
     {
         if(citizenManager.totalHapinessOfTown > 60) // Pass ReElection
         {
-            
+            uIManager.GameIsOverUI(true, "timer");  
         }
         else // Fail ReElection
         {
-
+            uIManager.GameIsOverUI(true, "timer");
         }
     }
 
@@ -124,11 +136,19 @@ public class TownManager : MonoBehaviour
                 energyManager.NaturalGasAmount -= UsedMegawattHour;
                 break;
             case EnergyManager.CurrentEnergy.Solar:
-                Money -= energyManager.solar.CostOfMegawattHour * CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
+                
 
                 UsedMegawattHour = CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
 
-                energyManager.SolarAmount -= UsedMegawattHour;
+                if (energyManager.SolarAmount > UsedMegawattHour)
+                {
+                    energyManager.SolarAmount -= UsedMegawattHour;
+                }
+                else
+                {
+                    energyManager.SolarAmount -= UsedMegawattHour;
+                    Money -= energyManager.solar.CostOfMegawattHour * CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
+                }
                 break;
             default:
                 break;
@@ -138,25 +158,14 @@ public class TownManager : MonoBehaviour
 
     
 
-    void Loose()
-    {
-        if(citizenManager.SetHappinessOfCitizens() == 0)
-        {
-            Debug.Log("Town Hapiness is 0");
-        }
-
-        if(citizenManager.totalCitizens.Count == 0)
-        {
-            Debug.Log("There are no Citizens");
-        }
-    }
+   
    
 
     IEnumerator MakeSeconds (int secondCount)
     {
         continueTimeCycle = false;
         
-        Debug.Log("Time has Passed");
+        //Debug.Log("Time has Passed");
         yield return new WaitForSeconds(secondCount);
         continueTimeCycle = true;
 
@@ -168,5 +177,15 @@ public class TownManager : MonoBehaviour
 
         //StartCoroutine(MakeSeconds(1));
         //MinusDays();
+    }
+
+    public void PlayAgainButton()
+    {
+        SceneManager.LoadScene("Test");
+    }
+
+    public void QuitButton()
+    {
+        Application.Quit();
     }
 }

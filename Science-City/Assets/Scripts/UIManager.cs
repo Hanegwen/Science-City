@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour
     public Canvas startCanvas;
     public Canvas baseGameCanvas;
 
-    
+
     public TextMeshProUGUI CurrentWeatherText;
     public TextMeshProUGUI NaturalGasReservesText;
     public TextMeshProUGUI CoalReservesText;
@@ -29,13 +29,15 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI AirPolutionText;
     public TextMeshProUGUI WaterPolutionText;
     public TextMeshProUGUI LandPolutionText;
-
+    public TextMeshProUGUI WinOrLooseText;
+    public TextMeshProUGUI ReasonText;
 
 
     public GameObject polutionPanel;
     public GameObject resourcePanel;
     public GameObject defaultPanel;
     public GameObject buttonPanel;
+    public GameObject EndGamePanel;
 
     public InputField NameField;
 
@@ -46,7 +48,7 @@ public class UIManager : MonoBehaviour
     //public GameObject ResourceAButton;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         weatherManager = FindObjectOfType<WeatherManager>();
         energyManager = FindObjectOfType<EnergyManager>();
@@ -62,13 +64,57 @@ public class UIManager : MonoBehaviour
         resourcePanel.SetActive(false);
         buttonPanel.SetActive(false);
         defaultPanel.SetActive(false);
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        EndGamePanel.SetActive(false);
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         UITextUpdate();
-	}
+    }
+
+    public void GameIsOverUI(bool playerWin, string reason)
+    {
+        polutionPanel.SetActive(false);
+        resourcePanel.SetActive(false);
+        buttonPanel.SetActive(false);
+        defaultPanel.SetActive(false);
+        EndGamePanel.SetActive(true);
+
+
+        if (playerWin)
+        {
+            WinOrLooseText.GetComponent<TextMeshProUGUI>().text = "You Won ReElection";
+
+            switch(reason)
+            {
+                case "timer":
+                    ReasonText.GetComponent<TextMeshProUGUI>().text = "Good job not burning your town to the ground";
+                    break;
+                case "polution":
+                    ReasonText.GetComponent<TextMeshProUGUI>().text = "ERROR: You Shouldn't be Winning because of this";
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            WinOrLooseText.GetComponent<TextMeshProUGUI>().text = "You Lost ReElection";
+
+            switch (reason)
+            {
+                case "timer":
+                    ReasonText.GetComponent<TextMeshProUGUI>().text = "Your approval rating was to low";
+                    break;
+                case "polution":
+                    ReasonText.GetComponent<TextMeshProUGUI>().text = "You let your city become sick so you are now arrested and removed from office";
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
     public void QuitButton()
     {
@@ -105,7 +151,7 @@ public class UIManager : MonoBehaviour
 
     public void StartGame()
     {
-        Debug.Log("Start Game Here");
+        //Debug.Log("Start Game Here");
 
         introCanvas.enabled = false;
         startCanvas.enabled = true;
@@ -123,29 +169,29 @@ public class UIManager : MonoBehaviour
     {
         SetTextColorForResources();
         CurrentWeatherText.text = "Current Weather: " + weatherManager.TodaysWeather;
-        Debug.Log(CurrentWeatherText.text);
+        //Debug.Log(CurrentWeatherText.text);
         NaturalGasReservesText.text = "Natural Gas: " + energyManager.NaturalGasAmount;
-        Debug.Log(NaturalGasReservesText.text);
+        //Debug.Log(NaturalGasReservesText.text);
         CoalReservesText.text = "Coal: " + energyManager.CoalAmount;
-        Debug.Log(CoalReservesText.text);
+        //Debug.Log(CoalReservesText.text);
         SunReservesText.text = "Solar Reserves: " + energyManager.SolarAmount;
-        Debug.Log(SunReservesText.text);
+        //Debug.Log(SunReservesText.text);
         CurrentMoneyText.text = "Current Money: " + townManager.Money;
-        Debug.Log(CurrentMoneyText.text);
+        //Debug.Log(CurrentMoneyText.text);
         DaysUntilReElectionText.text = "Days Until ReElection: " + townManager.DaysUntilReElection;
-        Debug.Log(DaysUntilReElectionText.text);
+        //Debug.Log(DaysUntilReElectionText.text);
         TotalApprovalText.text = "Total Approval: " + citizenManager.totalHapinessOfTown;
-        Debug.Log(TotalApprovalText.text);
+        //Debug.Log(TotalApprovalText.text);
         TotalCitizenText.text = "Total Population: " + citizenManager.totalCitizens.Count;
-        Debug.Log(TotalCitizenText.text);
+        //Debug.Log(TotalCitizenText.text);
         TotalPolutionText.text = "Total Polution: " + polutionManger.CurrentPolution;
-        Debug.Log(TotalPolutionText.text);
+        //Debug.Log(TotalPolutionText.text);
         AirPolutionText.text = "Air Polution: " + polutionManger.CurrentAirPolution;
-        Debug.Log(AirPolutionText.text);
+        //Debug.Log(AirPolutionText.text);
         WaterPolutionText.text = "Water Polution: " + polutionManger.CurrentWaterPolution;
-        Debug.Log(WaterPolutionText.text);
+        //Debug.Log(WaterPolutionText.text);
         LandPolutionText.text = "Land Polution: " + polutionManger.CurrentLandPolution;
-        Debug.Log(LandPolutionText.text);
+        //Debug.Log(LandPolutionText.text);
     }
 
     void SetTextColorForResources()

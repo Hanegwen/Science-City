@@ -8,7 +8,7 @@ public class Solar : Energy
 
     public float CostOfMegawattHour = 50f;
 
-    float costOfSolarPanel;
+    public float costOfSolarPanel = 50;
     public int amountOfSolarPanel;
     // Use this for initialization
     void Start ()

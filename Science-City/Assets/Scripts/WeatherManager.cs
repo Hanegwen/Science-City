@@ -23,7 +23,7 @@ public class WeatherManager : MonoBehaviour
 
     public void ChangeWeather()
     {
-        Debug.Log("Change Weather");
+        //Debug.Log("Change Weather");
         int randomize = Random.Range(0, 50);
             switch (TodaysWeather)
             {

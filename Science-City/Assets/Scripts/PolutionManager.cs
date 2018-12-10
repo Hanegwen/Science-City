@@ -7,11 +7,11 @@ public class PolutionManager : MonoBehaviour
 
     //Types of Polution Air, Water, Land
 
-    public int MaxPolution = 200;
+    public int MaxPolution = 2;
 
-    public int MaxAirPolution = 100;
-    public int MaxWaterPolution = 100;
-    public int MaxLandPolution = 100;
+    public int MaxAirPolution = 1;
+    public int MaxWaterPolution = 1;
+    public int MaxLandPolution = 1;
 
     public float CurrentPolution = 0;
 

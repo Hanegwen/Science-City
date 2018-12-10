@@ -50,7 +50,7 @@ public class EnergyManager : MonoBehaviour
     {
         if(weatherManager.TodaysWeather == WeatherManager.TypesOfDays.Sunny)
         {
-            SolarAmount += solar.amountOfSolarPanel * .03f;
+            SolarAmount += solar.amountOfSolarPanel * .0001f;
         }
     }
 
