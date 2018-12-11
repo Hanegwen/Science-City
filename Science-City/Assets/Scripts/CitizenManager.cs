@@ -21,12 +21,17 @@ public class CitizenManager : MonoBehaviour
 
         WaitingToMakeCitizens();
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    private void Start()
+    {
+        polutionManager = FindObjectOfType<PolutionManager>();
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         totalHapinessOfTown = SetHappinessOfCitizens();
-        polutionManager = FindObjectOfType<PolutionManager>();
+        
 	}
 
     public void AddNewCitizens()
@@ -52,7 +57,10 @@ public class CitizenManager : MonoBehaviour
     public float SetHappinessOfCitizens()
     {
 
-        float localHappiness = 1.5f - polutionManager.MaxPolution;
+        float localHappiness;
+        localHappiness = (298f - polutionManager.MaxPolution) - (polutionManager.MaxPolution /100) ;
+        print("Max Polution: " + polutionManager.MaxPolution);
+        print("Local Hapiness: " + localHappiness);
         return localHappiness;
     }
 

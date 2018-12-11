@@ -19,10 +19,14 @@ public class PolutionManager : MonoBehaviour
     public float CurrentWaterPolution = 0;
     public float CurrentLandPolution = 0;
 
-	// Use this for initialization
-	void Start ()
+    UIManager uIManager;
+
+    string lost = "polution";
+
+    // Use this for initialization
+    void Start ()
     {
-		
+        uIManager = FindObjectOfType<UIManager>();
 	}
 	
 	// Update is called once per frame
@@ -41,21 +45,28 @@ public class PolutionManager : MonoBehaviour
     {
         if(CurrentPolution >= MaxPolution)
         {
+            uIManager.GameIsOverUI(false, lost);
             Debug.Log("Current Polution is to High Dead");
         }
 
         if(CurrentAirPolution >= MaxAirPolution)
         {
+            uIManager.GameIsOverUI(false, lost);
+
             Debug.Log("Current Air Polution is To High Dead");
         }
 
         if(CurrentLandPolution >= MaxLandPolution)
         {
+            uIManager.GameIsOverUI(false, lost);
+
             Debug.Log("Current Land Polution is To High Dead");
         }
 
         if(CurrentWaterPolution >= MaxWaterPolution)
         {
+            uIManager.GameIsOverUI(false, lost);
+
             Debug.Log("Current Water Polution is To High Dead");
         }
     }

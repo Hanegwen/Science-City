@@ -146,7 +146,7 @@ public class TownManager : MonoBehaviour
                 }
                 else
                 {
-                    energyManager.SolarAmount -= UsedMegawattHour;
+                    //energyManager.SolarAmount -= UsedMegawattHour;
                     Money -= energyManager.solar.CostOfMegawattHour * CitizenEnergyUsage * citizenManager.totalCitizens.Capacity;
                 }
                 break;
